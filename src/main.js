@@ -1,6 +1,10 @@
-import './assets/main.css'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { createApp} from 'vue'
 
-import { createApp } from 'vue'
 import App from './App.vue'
-
-createApp(App).mount('#app')
+import router from "@/router/router.js";
+const oj = createApp(App);
+oj.use(router)
+oj.mount('#app')
