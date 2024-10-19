@@ -16,6 +16,7 @@
       text-align: center;
       //font-family: "Bodoni MT",serif;
       font-size: 15px;
+      background-color: #e5dfdf;
 
     }
     .under a{
