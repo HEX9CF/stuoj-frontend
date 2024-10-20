@@ -29,34 +29,27 @@
     </form>
   </div>
 </template>
+<script setup>
+import { ref } from 'vue';
 
-<script>
-export default {
-  name: 'Signup',
-  data() {
-    return {
-      username: '',
-      email: '',
-      studentId: '',
-      password: '',
-      verificationCode: ''
-    }
-  },
-  methods: {
-    handleSubmit() {
-      // 处理表单提交
-      console.log('Form submitted', this.username, this.email, this.studentId, this.password, this.verificationCode)
-      // 这里应该调用API进行实际的注册操作
-    },
-    refreshVerificationCode() {
-      // 刷新验证码
-      console.log('Refreshing verification code')
-      // 这里应该调用API获取新的验证码
-    }
-  }
-}
+const username = ref('');
+const email = ref('');
+const studentId = ref('');
+const password = ref('');
+const verificationCode = ref('');
+
+const handleSubmit = () => {
+  // 处理表单提交
+  console.log('Form submitted', username.value, email.value, studentId.value, password.value, verificationCode.value);
+  // 调用API进行实际的注册操作
+};
+
+const refreshVerificationCode = () => {
+  // 刷新验证码
+  console.log('Refreshing verification code');
+  // 调用API获取新的验证码
+};
 </script>
-
 <style scoped>
 .signup {
   max-width: 400px;
