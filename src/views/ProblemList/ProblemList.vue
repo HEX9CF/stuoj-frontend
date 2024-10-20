@@ -23,15 +23,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ProblemTable from './components/ProblemTable.vue'
-
-export default {
-  name: 'ProblemList',
-  components: {
-    ProblemTable
-  }
-}
 </script>
 
 <style scoped>

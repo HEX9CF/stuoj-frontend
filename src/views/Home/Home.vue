@@ -4,15 +4,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import HomeContent from './components/HomeContent.vue'
 
-export default {
-  name: 'Home',
-  components: {
-    HomeContent
-  }
-}
+
 </script>
 
 <style scoped>
