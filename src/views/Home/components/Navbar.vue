@@ -9,15 +9,15 @@
     <nav>
       <div class="brand">JNOJ</div>
       <ul>
-        <li><router-link to="/"><i class="icon-home"></i> 首页</router-link></li>
-        <li><router-link to="/problem"><i class="icon-list"></i> 问题列表</router-link></li>
-        <li><router-link to="/status"><i class="icon-status"></i> 状态</router-link></li>
-        <li><router-link to="/ranking"><i class="icon-ranking"></i> 排行榜</router-link></li>
-        <li><router-link to="/group"><i class="icon-group"></i> 小组</router-link></li>
-        <li><router-link to="/contest"><i class="icon-contest"></i> 比赛</router-link></li>
-        <li><router-link to="/help"><i class="icon-help"></i> 帮助</router-link></li>
+        <li><router-link to="/" active-class="active-link"><i class="icon-home"></i> 首页</router-link></li>
+        <li><router-link to="/problem" active-class="active-link"><i class="icon-list"></i> 问题列表</router-link></li>
+        <li><router-link to="/status" active-class="active-link"><i class="icon-status"></i> 状态</router-link></li>
+        <li><router-link to="/ranking" active-class="active-link"><i class="icon-ranking"></i> 排行榜</router-link></li>
+        <li><router-link to="/group" active-class="active-link"><i class="icon-group"></i> 小组</router-link></li>
+        <li><router-link to="/contest" active-class="active-link"><i class="icon-contest"></i> 比赛</router-link></li>
+        <li><router-link to="/help" active-class="active-link"><i class="icon-help"></i> 帮助</router-link></li>
         <template v-if="isLoggedIn">
-          <li><router-link to="/profile"><i class="icon-user"></i> 个人</router-link></li>
+          <li><router-link to="/profile" active-class="active-link"><i class="icon-user"></i> 个人</router-link></li>
           <li><a @click="logout" href="#"><i class="icon-logout"></i> 登出</a></li>
         </template>
         <template v-else>
@@ -29,32 +29,31 @@
   </header>
 </template>
 
-<script>
-export default {
-  name: 'Navbar',
-  data() {
-    return {
-      isLoggedIn: false
-    }
-  },
-  methods: {
-    logout() {
-      localStorage.removeItem('isLoggedIn')
-      this.isLoggedIn = false
-      this.$router.push('/login')
-    },
-    checkLoginStatus() {
-      this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
-    }
-  },
-  mounted() {
-    this.checkLoginStatus()
-    window.addEventListener('storage', this.checkLoginStatus)
-  },
-  beforeUnmount() {
-    window.removeEventListener('storage', this.checkLoginStatus)
-  }
-}
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useRouter } from 'vue-router';
+
+const isLoggedIn = ref(false);
+const router = useRouter();
+
+const checkLoginStatus = () => {
+  isLoggedIn.value = localStorage.getItem('isLoggedIn') === 'true';
+};
+
+const logout = () => {
+  localStorage.removeItem('isLoggedIn');
+  isLoggedIn.value = false;
+  router.push('/login');
+};
+
+onMounted(() => {
+  checkLoginStatus();
+  window.addEventListener('storage', checkLoginStatus);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('storage', checkLoginStatus);
+});
 </script>
 
 <style scoped>
@@ -109,4 +108,7 @@ a {
 a:hover {
   color: #006d8f;
 }
+ .active-link{
+   color: #006d8f;
+ }
 </style>

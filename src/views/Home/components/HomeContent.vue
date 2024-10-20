@@ -21,10 +21,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HomeContent'
-}
+<script setup>
+
 </script>
 
 <style scoped>
