@@ -5,15 +5,8 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import ContestTable from './components/ContestTable.vue'
-
-export default {
-  name: 'Contest',
-  components: {
-    ContestTable
-  }
-}
 </script>
 
 <style scoped>

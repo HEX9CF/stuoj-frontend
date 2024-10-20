@@ -21,42 +21,36 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ContestTable',
-  data() {
-    return {
-      contests: [
-        { 
-          id: 77, 
-          title: 'JNOJ·基础题测试1 (公开)', 
-          url: '/contest/view?id=77',
-          status: '已结束',
-          startTime: '2023-12-16 00:00:00',
-          endTime: '2023-12-17 23:59:59'
-        },
-        { 
-          id: 76, 
-          title: '测试', 
-          url: '/contest/view?id=76',
-          status: '已结束',
-          startTime: '2023-12-14 00:00:00',
-          endTime: '2023-12-16 00:00:00'
-        },
-        { 
-          id: 67, 
-          title: 'test', 
-          url: '/contest/view?id=67',
-          status: '已结束',
-          startTime: '2023-11-15 12:40:05',
-          endTime: '2023-11-16 00:00:00'
-        }
-      ]
-    }
-  }
-}
-</script>
+<script setup>
+import { ref } from 'vue';
 
+const contests = ref([
+  {
+    id: 77,
+    title: 'JNOJ·基础题测试1 (公开)',
+    url: '/contest/view?id=77',
+    status: '已结束',
+    startTime: '2023-12-16 00:00:00',
+    endTime: '2023-12-17 23:59:59'
+  },
+  {
+    id: 76,
+    title: '测试',
+    url: '/contest/view?id=76',
+    status: '已结束',
+    startTime: '2023-12-14 00:00:00',
+    endTime: '2023-12-16 00:00:00'
+  },
+  {
+    id: 67,
+    title: 'test',
+    url: '/contest/view?id=67',
+    status: '已结束',
+    startTime: '2023-11-15 12:40:05',
+    endTime: '2023-11-16 00:00:00'
+  }
+]);
+</script>
 <style scoped>
 .contest-table {
   width: 100%;
