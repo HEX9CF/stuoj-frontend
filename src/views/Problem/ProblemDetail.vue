@@ -54,52 +54,97 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProblemDetail',
-  data() {
-    return {
-      problem: {
-        id: 1,
-        title: '[在线测评解答教程] A+B Problem',
-        timeLimit: 1,
-        memoryLimit: 128,
-        description: '输入两个数字，输出它们的和。',
-        input: '两个整数: a, b(0 ≤ a, b ≤ 100)。',
-        output: '输出一个整数，该整数为 a, b 两数字之和。',
-        samples: [
-          {
-            input: '1 2',
-            output: '3'
-          }
-        ],
-        hint: '使用基本的加法运算即可解决此问题。'
-      },
-      submission: {
-        language: 'cpp',
-        code: ''
-      }
+<script setup>
+import {useRoute} from "vue-router";
+import {onMounted, ref} from "vue";
+
+const problem = ref({
+  id: 1,
+  title: '[在线测评解答教程] A+B Problem',
+  timeLimit: 1,
+  memoryLimit: 128,
+  description: '输入两个数字，输出它们的和。',
+  input: '两个整数: a, b(0 ≤ a, b ≤ 100)。',
+  output: '输出一个整数，该整数为 a, b 两数字之和。',
+  samples: [
+    {
+      input: '1 2',
+      output: '3'
     }
-  },
-  mounted() {
-    // 这里应该根据路由参数获取题目详情
-    const problemId = this.$route.params.id
-    // 调用API获取题目详情
-    // this.fetchProblemDetail(problemId)
-  },
-  methods: {
-    fetchProblemDetail(id) {
-      // 调用API获取题目详情的方法
-    },
-    submitCode() {
-      // 处理代码提交
-      console.log('Submitting code:', this.submission)
-      // 这里应该调用API提交代码
-      // 提交成功后可以跳转到状态页面或显示结果
-    }
-  }
-}
+  ],
+  hint: '使用基本的加法运算即可解决此问题。'
+});
+
+const submission = ref({
+  language: 'cpp',
+  code: ''
+});
+
+// 使用路由获取题目ID
+const route = useRoute();
+const problemId = route.params.id;
+const fetchProblemDetail = async (id = string , number) => {
+  console.log(`Fetching problem detail for id: ${id}`);
+  // 这里调用API获取题目详情，示例中使用现有的默认问题数据
+};
+
+// 代码提交处理逻辑
+const submitCode = () => {
+  console.log('Submitting code:', submission.value);
+  // 调用API提交代码的逻辑
+};
+
+// 生命周期钩子，组件挂载时调用
+onMounted(() => {
+  fetchProblemDetail(problemId);
+});
 </script>
+
+
+// export default {
+//   name: 'ProblemDetail',
+//   data() {
+//     return {
+//       problem: {
+//         id: 1,
+//         title: '[在线测评解答教程] A+B Problem',
+//         timeLimit: 1,
+//         memoryLimit: 128,
+//         description: '输入两个数字，输出它们的和。',
+//         input: '两个整数: a, b(0 ≤ a, b ≤ 100)。',
+//         output: '输出一个整数，该整数为 a, b 两数字之和。',
+//         samples: [
+//           {
+//             input: '1 2',
+//             output: '3'
+//           }
+//         ],
+//         hint: '使用基本的加法运算即可解决此问题。'
+//       },
+//       submission: {
+//         language: 'cpp',
+//         code: ''
+//       }
+//     }
+//   },
+//   mounted() {
+//     // 这里应该根据路由参数获取题目详情
+//     const problemId = this.$route.params.id
+//     // 调用API获取题目详情
+//     // this.fetchProblemDetail(problemId)
+//   },
+//   methods: {
+//     fetchProblemDetail(id) {
+//       // 调用API获取题目详情的方法
+//     },
+//     submitCode() {
+//       // 处理代码提交
+//       console.log('Submitting code:', this.submission)
+//       // 这里应该调用API提交代码
+//       // 提交成功后可以跳转到状态页面或显示结果
+//     }
+//   }
+// }
 
 <style scoped>
 .problem-detail {
