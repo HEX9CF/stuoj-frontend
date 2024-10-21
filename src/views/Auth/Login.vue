@@ -4,7 +4,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
         <label for="username">用户名或邮箱</label>
-        <input type="text" id="username" v-model="username" required />
+        <input type="text" id="username" v-model="email" required />
       </div>
       <div class="form-group">
         <label for="password">密码</label>
@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -35,23 +36,61 @@ const password = ref('');
 const rememberMe = ref(false);
 const errorMessage = ref('');
 const router = useRouter();
+const email = ref('');
 
 const handleSubmit = () => {
   // 模拟登录逻辑
-  if (username.value === '123' && password.value === '123456') {
-    console.log('登录成功');
-    errorMessage.value = '';
-    // 设置登录状态
-    localStorage.setItem('isLoggedIn', 'true');
-    // 触发storage事件,以便Navbar组件能够检测到登录状态的变化
-    window.dispatchEvent(new Event('storage'));
-    // 登录成功后跳转到个人页面
-    router.push('/profile');
-  } else {
-    console.log('登录失败');
-    errorMessage.value = '用户名或密码错误';
+  login(email.value, password.value)
+      .then(data => {
+        console.log('Login successful:', data);
+        console.log('登录成功');
+        errorMessage.value = '';
+
+        // 假设返回的 data 中包含 token
+        const token = data.data;  // 从返回的数据中提取 token
+        console.log('Token:', token);
+
+        // 保存 token 到 localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // 触发 storage 事件, 以便其他组件能够检测到登录状态的变化
+        window.dispatchEvent(new Event('storage'));
+
+        // 登录成功后跳转到个人页面
+        router.push('/profile');
+      })
+      .catch(error => {
+        console.error('Login failed:', error);
+        console.log('登录失败');
+        errorMessage.value = '用户名或密码错误';
+      });
+};
+
+const login = async (email, password) => {
+  try {
+    const response = await axios.post('/user/login', {
+      email: email,
+      password: password
+    },{
+      headers: {
+      'Content-Type': 'application/json'
+      }
+    });
+
+    // 处理返回值
+    console.log('Response data:', response.data);
+    return response.data;  // 返回服务端的响应数据
+  } catch (error) {
+    // 错误处理
+    console.error('Error during login:', error);
+    throw error;  // 抛出错误以便 handleSubmit 进行处理
   }
 };
+
+
+// 调用示例
+
 </script>
 
 <style scoped>

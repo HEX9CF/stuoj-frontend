@@ -10,10 +10,10 @@
         <label for="email">邮箱</label>
         <input type="email" id="email" v-model="email" required>
       </div>
-      <div class="form-group">
-        <label for="studentId">学号</label>
-        <input type="text" id="studentId" v-model="studentId" required>
-      </div>
+<!--      <div class="form-group">-->
+<!--        <label for="studentId">学号</label>-->
+<!--        <input type="text" id="studentId" v-model="studentId" required>-->
+<!--      </div>-->
       <div class="form-group">
         <label for="password">密码</label>
         <input type="password" id="password" v-model="password" required>
@@ -31,6 +31,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
+import axios from "axios";
 
 const username = ref('');
 const email = ref('');
@@ -38,10 +39,41 @@ const studentId = ref('');
 const password = ref('');
 const verificationCode = ref('');
 
-const handleSubmit = () => {
-  // 处理表单提交
-  console.log('Form submitted', username.value, email.value, studentId.value, password.value, verificationCode.value);
-  // 调用API进行实际的注册操作
+const handleSubmit = async () => {
+  try {
+    // 处理表单提交
+    console.log('Form submitted', username.value, email.value, studentId.value, password.value, verificationCode.value);
+
+    // 调用API进行实际的注册操作
+    const person = await Signup(username.value, email.value, password.value);
+
+    // 注册成功的处理
+    console.log('Signup successful:', person);
+    console.log('注册成功');
+
+  } catch (error) {
+    // 注册失败的处理
+    console.error('Signup failed:', error);
+    console.log('邮箱重复或账号重复');
+  }
+};
+
+// 注册功能封装
+const Signup = async (username, email, password) => {
+  try {
+    const response = await axios.post('/user/register', {
+      username: username,  // 直接传递值
+      email: email,        // 直接传递值
+      password: password   // 直接传递值
+    });
+
+    // 返回响应数据
+    return response.data;
+
+  } catch (error) {
+    console.error('API error:', error);
+    throw error;  // 抛出错误，以便在 handleSubmit 中捕获
+  }
 };
 
 const refreshVerificationCode = () => {
