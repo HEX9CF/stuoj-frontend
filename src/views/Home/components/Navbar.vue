@@ -63,6 +63,7 @@ header {
   z-index: 1000;
   background-color: #006d8f;
   color: white;
+  width: 1200px;
 }
 .top-bar {
   display: flex;
