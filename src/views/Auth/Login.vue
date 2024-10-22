@@ -28,66 +28,61 @@
 
 <script setup>
 import axios from 'axios';
-import {onMounted, ref} from 'vue';
-import {useRouter} from 'vue-router';
-import {useUserStore} from "../../store/user.js";
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from "../../store/user.js";
 
 const UserStore = useUserStore();
-const username = ref('');
+const email = ref('');
 const password = ref('');
-const rememberMe = ref(false);
 const errorMessage = ref('');
 const router = useRouter();
-const email = ref('');
+const rememberMe = ref(false);
+const handleSubmit = async () => {
+  try {
+    const data = await login(email.value, password.value);
+    console.log('Login successful:', data);
+    errorMessage.value = '';
 
-const handleSubmit = () => {
-  // 模拟登录逻辑
-  login(email.value, password.value)
-      .then(data => {
-        console.log('Login successful:', data);
-        console.log('登录成功');
-        errorMessage.value = '';
-        // 假设返回的 data 中包含 token
-        const token = data.data;
-        UserStore.token = token;// 从返回的数据中提取 token
-        console.log('Token:', token);
-        localStorage.setItem('token',token);
-        localStorage.setItem('isLoggedIn', 'true');
-        // 保存 token 到 localStorage
-        // 触发 storage 事件, 以便其他组件能够检测到登录状态的变化
-        window.dispatchEvent(new Event('storage'));
-        UserStore.id = userId;
-        console.log(UserStore.id)
-        // 登录成功后跳转到个人页面
-        router.push('/profile');
-      })
-      .catch(error => {
-        console.error('Login failed:', error);
-        console.log('登录失败');
-        errorMessage.value = '用户名或密码错误';
-      });
+    const token = data.data; // 从返回的数据中提取 token
+    UserStore.setToken(token);
+    console.log('Token:', token);
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('isLoggedIn', 'true');
+
+    window.dispatchEvent(new Event('storage'));
+
+    // 获取用户 ID
+    const userId = await getId(token); // 获取用户 ID
+    UserStore.setId(userId); // 设置用户 ID 到 Store
+
+    console.log(UserStore.id);
+    await router.push('/profile');
+  } catch (error) {
+    console.error('Login failed:', error);
+    errorMessage.value = '用户名或密码错误';
+  }
 };
+
 const login = async (email, password) => {
   try {
     const response = await axios.post('/user/login', {
       email: email,
       password: password
-    },{
+    }, {
       headers: {
-      'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       }
     });
 
-    // 处理返回值
     console.log('Response data:', response.data);
-    return response.data;  // 返回服务端的响应数据
+    return response.data; // 返回服务端的响应数据
   } catch (error) {
-    // 错误处理
     console.error('Error during login:', error);
-    throw error;  // 抛出错误以便 handleSubmit 进行处理
+    throw error; // 抛出错误以便 handleSubmit 进行处理
   }
 };
-const userId = ref(null); // 响应式变量用于保存用户 ID
 
 const getId = async (token) => {
   try {
@@ -96,7 +91,7 @@ const getId = async (token) => {
         'Authorization': `Bearer ${token}`
       }
     });
-    return response.data; // 返回用户数据
+    return response.data.data; // 返回用户数据
   } catch (error) {
     console.error('Error fetching user data:', error);
     throw error; // 抛出错误
@@ -110,16 +105,14 @@ onMounted(async () => {
     console.error('No token found');
     return; // 如果没有 token，提前返回
   }
-
   try {
     const userData = await getId(token); // 调用 getId 获取用户数据
-    userId.value = userData.id; // 直接将用户 ID 赋值给 userId
-    console.log('Current User ID:', userId.value); // 打印用户 ID
+    UserStore.setId(userData.id); // 将用户 ID 设置到 Store
+    console.log('Current User ID:', userData.id); // 打印用户 ID
   } catch (error) {
     console.error('Failed to fetch current user:', error);
   }
 });
-
 </script>
 
 <style scoped>

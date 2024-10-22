@@ -2,13 +2,13 @@
   <div class="user-profile">
     <h1>个人主页</h1>
     <div class="profile-info">
-      <img :src="user.avatar" alt="用户头像" class="avatar">
+<!--      <img :src="user.avatar" alt="用户头像" class="avatar">-->
       <div class="user-details">
-        <h2>{{ user.username }}</h2>
-        <p>邮箱: {{ user.email }}</p>
-        <p>学号: {{ user.studentId }}</p>
-        <p>注册时间: {{ user.registerDate }}</p>
-        <p>上次登录: {{ user.lastLogin }}</p>
+        <h2>{{ UserStore.username }}</h2>
+        <p>邮箱: {{ UserStore.useremail }}</p>
+<!--        <p>学号: {{ user.studentId }}</p>-->
+        <p>注册时间: {{ UserStore.userSignTime }}</p>
+<!--        <p>上次登录: {{ user.lastLogin }}</p>-->
       </div>
     </div>
     <div class="user-stats">
@@ -32,6 +32,7 @@
 import { ref } from 'vue';
 import { useUserStore } from '../../store/user.js';
 import axios from 'axios';
+const UserStore = useUserStore();
 
 // 使用 ref 来创建一个响应式的 user 对象
 const user = ref({
@@ -48,24 +49,19 @@ const user = ref({
 });
 
 // 获取用户ID
-let id = useUserStore().id;
+const id = UserStore.id;
 
 // 使用 axios 发起请求，获取用户数据
 axios.get(`/user/${id}`)
     .then(response => {
       const data = response.data;
-      user.value = {
-        username: data.username,
-        email: data.email,
-        studentId: data.studentId,  // 假设API中有这个字段
-        // avatar: data.avatar,
-        registerDate: data.create_time,
-        lastLogin: data.lastLogin,  // 假设API中有这个字段
-        // solvedProblems: data.solvedProblems,  // 假设API中有这个字段
-        // submissions: data.submissions,  // 假设API中有这个字段
-        // acceptanceRate: data.acceptanceRate,  // 假设API中有这个字段
-        // recentActivities: data.recentActivities || []
-      };
+      console.log('success')
+      UserStore.setUserDetails({
+        username: data.data.username,
+        email: data.data.email,
+        create_time: data.data.create_time
+      })
+      console.log(data.data.username);
     })
     .catch(error => {
       console.error('请求用户数据失败:', error);
