@@ -51,6 +51,8 @@ const handleSubmit = () => {
         const token = data.data;
         UserStore.token = token;// 从返回的数据中提取 token
         console.log('Token:', token);
+        localStorage.setItem('token',token);
+        localStorage.setItem('isLoggedIn', 'true');
         // 保存 token 到 localStorage
         // 触发 storage 事件, 以便其他组件能够检测到登录状态的变化
         window.dispatchEvent(new Event('storage'));
