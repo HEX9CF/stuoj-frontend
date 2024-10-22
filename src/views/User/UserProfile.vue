@@ -13,45 +13,63 @@
     </div>
     <div class="user-stats">
       <h3>统计信息</h3>
-      <p>解决的题目: {{ user.solvedProblems }}</p>
-      <p>提交次数: {{ user.submissions }}</p>
-      <p>通过率: {{ user.acceptanceRate }}%</p>
+<!--      <p>解决的题目: {{ user.solvedProblems }}</p>-->
+<!--      <p>提交次数: {{ user.submissions }}</p>-->
+<!--      <p>通过率: {{ user.acceptanceRate }}%</p>-->
     </div>
     <div class="recent-activity">
       <h3>最近活动</h3>
-      <ul>
-        <li v-for="activity in user.recentActivities" :key="activity.id">
-          {{ activity.date }} - {{ activity.description }}
-        </li>
-      </ul>
+<!--      <ul>-->
+<!--        <li v-for="activity in user.recentActivities" :key="activity.id">-->
+<!--          {{ activity.date }} - {{ activity.description }}-->
+<!--        </li>-->
+<!--      </ul>-->
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UserProfile',
-  data() {
-    return {
-      user: {
-        username: '测试用户',
-        email: 'test@example.com',
-        studentId: '20240001',
-        avatar: 'https://via.placeholder.com/150',
-        registerDate: '2024-01-01',
-        lastLogin: '2024-03-15',
-        solvedProblems: 50,
-        submissions: 100,
-        acceptanceRate: 50,
-        recentActivities: [
-          { id: 1, date: '2024-03-14', description: '解决了问题 #1001' },
-          { id: 2, date: '2024-03-13', description: '参加了比赛 "春季编程大赛"' },
-          { id: 3, date: '2024-03-12', description: '加入了小组 "算法学习"' }
-        ]
-      }
-    }
-  }
-}
+<script setup>
+import { ref } from 'vue';
+import { useUserStore } from '../../store/user.js';
+import axios from 'axios';
+
+// 使用 ref 来创建一个响应式的 user 对象
+const user = ref({
+  username: '',
+  email: '',
+  studentId: '',
+  avatar: '',
+  registerDate: '',
+  lastLogin: '',
+  // solvedProblems: 0,
+  // submissions: 0,
+  // acceptanceRate: 0,
+  // recentActivities: []
+});
+
+// 获取用户ID
+let id = useUserStore().id;
+
+// 使用 axios 发起请求，获取用户数据
+axios.get(`/user/${id}`)
+    .then(response => {
+      const data = response.data;
+      user.value = {
+        username: data.username,
+        email: data.email,
+        studentId: data.studentId,  // 假设API中有这个字段
+        // avatar: data.avatar,
+        registerDate: data.create_time,
+        lastLogin: data.lastLogin,  // 假设API中有这个字段
+        // solvedProblems: data.solvedProblems,  // 假设API中有这个字段
+        // submissions: data.submissions,  // 假设API中有这个字段
+        // acceptanceRate: data.acceptanceRate,  // 假设API中有这个字段
+        // recentActivities: data.recentActivities || []
+      };
+    })
+    .catch(error => {
+      console.error('请求用户数据失败:', error);
+    });
 </script>
 
 <style scoped>

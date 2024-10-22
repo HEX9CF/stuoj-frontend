@@ -28,9 +28,11 @@
 
 <script setup>
 import axios from 'axios';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {useUserStore} from "../../store/user.js";
 
+const UserStore = useUserStore();
 const username = ref('');
 const password = ref('');
 const rememberMe = ref(false);
@@ -45,18 +47,15 @@ const handleSubmit = () => {
         console.log('Login successful:', data);
         console.log('登录成功');
         errorMessage.value = '';
-
         // 假设返回的 data 中包含 token
-        const token = data.data;  // 从返回的数据中提取 token
+        const token = data.data;
+        UserStore.token = token;// 从返回的数据中提取 token
         console.log('Token:', token);
-
         // 保存 token 到 localStorage
-        localStorage.setItem('token', token);
-        localStorage.setItem('isLoggedIn', 'true');
-
         // 触发 storage 事件, 以便其他组件能够检测到登录状态的变化
         window.dispatchEvent(new Event('storage'));
-
+        UserStore.id = userId;
+        console.log(UserStore.id)
         // 登录成功后跳转到个人页面
         router.push('/profile');
       })
@@ -66,7 +65,6 @@ const handleSubmit = () => {
         errorMessage.value = '用户名或密码错误';
       });
 };
-
 const login = async (email, password) => {
   try {
     const response = await axios.post('/user/login', {
@@ -87,9 +85,38 @@ const login = async (email, password) => {
     throw error;  // 抛出错误以便 handleSubmit 进行处理
   }
 };
+const userId = ref(null); // 响应式变量用于保存用户 ID
 
+const getId = async (token) => {
+  try {
+    const response = await axios.get('/user/current', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data; // 返回用户数据
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error; // 抛出错误
+  }
+};
 
-// 调用示例
+// 在组件挂载时获取当前用户信息
+onMounted(async () => {
+  const token = localStorage.getItem('token'); // 从存储中获取 token
+  if (!token) {
+    console.error('No token found');
+    return; // 如果没有 token，提前返回
+  }
+
+  try {
+    const userData = await getId(token); // 调用 getId 获取用户数据
+    userId.value = userData.id; // 直接将用户 ID 赋值给 userId
+    console.log('Current User ID:', userId.value); // 打印用户 ID
+  } catch (error) {
+    console.error('Failed to fetch current user:', error);
+  }
+});
 
 </script>
 

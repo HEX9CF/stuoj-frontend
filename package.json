@@ -12,6 +12,7 @@
     "@vue/cli-service": "^5.0.8",
     "axios": "^1.7.7",
     "cors": "^2.8.5",
+    "pinia": "^2.2.4",
     "vue": "^3.x.x",
     "vue-router": "^4.4.5",
     "vue3-txet": "file:"
