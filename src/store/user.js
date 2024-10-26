@@ -5,9 +5,10 @@ export const useUserStore = defineStore('user',{
         return {
             username : '',
             useremail : '',
-            userSignTime :'',
+            registerDate :'',
             id : 0,
-            token:''
+            token:'',
+            avatar:''
         }
     },
     actions:{
@@ -19,7 +20,7 @@ export const useUserStore = defineStore('user',{
         },
         setUserDetails({ username, email, create_time}) {
             this.username = username;
-            this.userSignTime = create_time;
+            this.registerDate = create_time;
             this.useremail = email;
         }
     }

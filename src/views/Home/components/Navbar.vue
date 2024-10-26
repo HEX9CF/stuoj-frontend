@@ -13,12 +13,28 @@
           </router-link>
         </li>
         <template v-if="isLoggedIn">
-          <li><router-link to="/profile" active-class="active-link" aria-label="个人"><i class="icon-user"></i> 个人</router-link></li>
-          <li><a @click="logout" href="#" aria-label="登出"><i class="icon-logout"></i> 登出</a></li>
+          <li>
+            <router-link to="/profile" active-class="active-link" aria-label="个人">
+              <i class="fas fa-user"></i> 个人
+            </router-link>
+          </li>
+          <li>
+            <a @click="logout" href="#" aria-label="登出">
+              <i class="fas fa-sign-out-alt"></i> 登出
+            </a>
+          </li>
         </template>
         <template v-else>
-          <li><router-link to="/signup" aria-label="注册"><i class="icon-register"></i> 注册</router-link></li>
-          <li><router-link to="/login" aria-label="登录"><i class="icon-login"></i> 登录</router-link></li>
+          <li>
+            <router-link to="/signup" aria-label="注册">
+              <i class="fas fa-user-plus"></i> 注册
+            </router-link>
+          </li>
+          <li>
+            <router-link to="/login" aria-label="登录">
+              <i class="fas fa-sign-in-alt"></i> 登录
+            </router-link>
+          </li>
         </template>
       </ul>
     </nav>
@@ -26,27 +42,43 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const isLoggedIn = computed(() => localStorage.getItem('isLoggedIn') === 'true');
+const isLoggedIn = ref(localStorage.getItem('isLoggedIn') === 'true');
 
 const links = [
-  { path: '/', label: '首页', icon: 'icon-home' },
-  { path: '/problem', label: '问题列表', icon: 'icon-list' },
-  { path: '/status', label: '状态', icon: 'icon-status' },
-  { path: '/ranking', label: '排行榜', icon: 'icon-ranking' },
-  { path: '/group', label: '小组', icon: 'icon-group' },
-  { path: '/contest', label: '比赛', icon: 'icon-contest' },
-  { path: '/help', label: '帮助', icon: 'icon-help' }
+  { path: '/', label: '首页', icon: 'fas fa-home' },
+  { path: '/problem', label: '问题列表', icon: 'fas fa-list' },
+  { path: '/status', label: '状态', icon: 'fas fa-clipboard-check' },
+  { path: '/ranking', label: '排行榜', icon: 'fas fa-trophy' },
+  { path: '/group', label: '小组', icon: 'fas fa-users' },
+  { path: '/contest', label: '比赛', icon: 'fas fa-flag' },
+  { path: '/help', label: '帮助', icon: 'fas fa-question-circle' }
 ];
+
+const checkLoginStatus = () => {
+  isLoggedIn.value = localStorage.getItem('isLoggedIn') === 'true';
+};
 
 const logout = () => {
   localStorage.removeItem('isLoggedIn');
+  isLoggedIn.value = false;
   router.push('/login');
 };
+
+onMounted(() => {
+  checkLoginStatus();
+  window.addEventListener('storage', checkLoginStatus);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('storage', checkLoginStatus);
+});
 </script>
+
+
 
 
 <style scoped>
