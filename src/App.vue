@@ -1,6 +1,13 @@
 <script setup>
 import Navbar from './views/Home/components/Navbar.vue'
 import Footer from './views/Home/components/Footer.vue'
+import {defineComponent} from "vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+defineComponent({
+  components:{
+    FontAwesomeIcon
+  }
+});
 </script>
 
 <template>

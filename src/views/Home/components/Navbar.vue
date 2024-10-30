@@ -9,30 +9,30 @@
       <ul>
         <li v-for="link in links" :key="link.path">
           <router-link :to="link.path" active-class="active-link" :aria-label="link.label">
-            <i :class="link.icon"></i> {{ link.label }}
+            <font-awesome-icon :icon="link.icon" /> {{ link.label }}
           </router-link>
         </li>
         <template v-if="isLoggedIn">
           <li>
             <router-link to="/profile" active-class="active-link" aria-label="个人">
-              <i class="fas fa-user"></i> 个人
+              <font-awesome-icon icon="user" /> 个人
             </router-link>
           </li>
           <li>
             <a @click="logout" href="#" aria-label="登出">
-              <i class="fas fa-sign-out-alt"></i> 登出
+              <font-awesome-icon icon="sign-out-alt" /> 登出
             </a>
           </li>
         </template>
         <template v-else>
           <li>
             <router-link to="/signup" aria-label="注册">
-              <i class="fas fa-user-plus"></i> 注册
+              <font-awesome-icon icon="user-plus" /> 注册
             </router-link>
           </li>
           <li>
             <router-link to="/login" aria-label="登录">
-              <i class="fas fa-sign-in-alt"></i> 登录
+              <font-awesome-icon icon="sign-in-alt" /> 登录
             </router-link>
           </li>
         </template>
@@ -42,21 +42,33 @@
 </template>
 
 <script setup>
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faUser, faSignOutAlt, faUserPlus, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+
+// 注册图标
+
+
+// 组件注册
+defineExpose({ FontAwesomeIcon });
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { faHome, faList, faClipboardCheck, faTrophy, faUsers, faFlag, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+library.add(faHome, faList, faClipboardCheck, faTrophy, faUsers, faFlag, faQuestionCircle);
 const router = useRouter();
 const isLoggedIn = ref(localStorage.getItem('isLoggedIn') === 'true');
 
 const links = [
-  { path: '/', label: '首页', icon: 'fas fa-home' },
-  { path: '/problem', label: '问题列表', icon: 'fas fa-list' },
-  { path: '/status', label: '状态', icon: 'fas fa-clipboard-check' },
-  { path: '/ranking', label: '排行榜', icon: 'fas fa-trophy' },
-  { path: '/group', label: '小组', icon: 'fas fa-users' },
-  { path: '/contest', label: '比赛', icon: 'fas fa-flag' },
-  { path: '/help', label: '帮助', icon: 'fas fa-question-circle' }
+  { path: '/', label: '首页', icon: ['fas', 'home'] },
+  { path: '/problem', label: '问题列表', icon: ['fas', 'list'] },
+  { path: '/status', label: '状态', icon: ['fas', 'clipboard-check'] },
+  { path: '/ranking', label: '排行榜', icon: ['fas', 'trophy'] },
+  { path: '/group', label: '小组', icon: ['fas', 'users'] },
+  { path: '/contest', label: '比赛', icon: ['fas', 'flag'] },
+  { path: '/help', label: '帮助', icon: ['fas', 'question-circle'] }
 ];
+
 
 const checkLoginStatus = () => {
   isLoggedIn.value = localStorage.getItem('isLoggedIn') === 'true';
