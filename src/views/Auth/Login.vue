@@ -52,6 +52,7 @@ const handleSubmit = async () => {
     window.dispatchEvent(new Event('storage'));
     // 获取用户 ID
     const userId = await getId(token); // 获取用户 ID
+    localStorage.setItem('id',userId);
     UserStore.setId(userId); // 设置用户 ID 到 Store
     console.log(UserStore.id);
     await router.push('/profile');
