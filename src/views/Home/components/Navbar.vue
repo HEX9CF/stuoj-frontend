@@ -32,7 +32,7 @@
           </li>
           <li>
             <router-link to="/login" aria-label="登录">
-              <font-awesome-icon icon="sign-in-alt" /> 登录
+              <font-awesome-icon icon="sign-in" /> 登录
             </router-link>
           </li>
         </template>
@@ -44,7 +44,6 @@
 <script setup>
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faUser, faSignOutAlt, faUserPlus, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 // 注册图标
 
@@ -66,7 +65,8 @@ const links = [
   { path: '/ranking', label: '排行榜', icon: ['fas', 'trophy'] },
   { path: '/group', label: '小组', icon: ['fas', 'users'] },
   { path: '/contest', label: '比赛', icon: ['fas', 'flag'] },
-  { path: '/help', label: '帮助', icon: ['fas', 'question-circle'] }
+  { path: '/help', label: '帮助', icon: ['fas', 'question-circle'] },
+  { path: '/ProgramListManger', label: '题目管理'}
 ];
 
 
@@ -75,7 +75,7 @@ const checkLoginStatus = () => {
 };
 
 const logout = () => {
-  localStorage.removeItem('isLoggedIn');
+  localStorage.clear();
   isLoggedIn.value = false;
   router.push('/login');
 };

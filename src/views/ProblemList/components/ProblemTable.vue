@@ -16,7 +16,7 @@
           <router-link :to="{ name: 'ProblemDetail', params: { id: problem.id } }">
             {{ problem.title }}
           </router-link>
-          <span v-for="tag in problem.tags" :key="tag" class="tag">{{ tag }}</span>
+          <span v-for="tag in tags" :key="tag.id" class="tag">{{ tag }}</span>
         </td>
         <td>{{ problem.solved ? 'Yes' : 'No' }}</td>
       </tr>
@@ -28,13 +28,18 @@
 <script setup>
 import axios from "axios";
 import {ref, onMounted} from "vue";
-
+import http from "../../../http/http.js";
+const tags = ref('');
 const problems = ref([]); // 响应式的题目列表
+const fetchProblemDetail = async (id) => {
+  const response = await axios.get(`/problem/${id}`);
+  tags.value = response.data.data.tags;
+};
 
 // 从服务器获取题目列表的函数
 const getProblemList = async () => {
   try {
-    const response = await axios.get("/problem/"); // 替换为你的服务器地址
+    const response = await http.get("/problem/"); // 替换为你的服务器地址
     problems.value = response.data.data; // 假设服务器返回的数据格式为 [{ id: 1, title: '题目1', solved: true, tags: ['easy'] }, ...]
     console.log(response.data);
   } catch (error) {

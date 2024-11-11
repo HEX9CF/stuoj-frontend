@@ -31,6 +31,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from "../../store/user.js";
+import http from "../../http/http.js";
 
 const UserStore = useUserStore();
 const email = ref('');
@@ -55,6 +56,7 @@ const handleSubmit = async () => {
     localStorage.setItem('id',userId);
     UserStore.setId(userId); // 设置用户 ID 到 Store
     console.log(UserStore.id);
+    await fetchUserProfile(userId);
     await router.push('/profile');
   } catch (error) {
     console.error('Login failed:', error);
@@ -92,6 +94,15 @@ const getId = async (token) => {
   } catch (error) {
     console.error('Error fetching user data:', error);
     throw error; // 抛出错误
+  }
+};
+const fetchUserProfile = async () => {
+  try {
+    const response = await http.get(`/user/${UserStore.id}`);
+    localStorage.setItem("role",response.data.data.role);
+    console.log(response.data.data.role);
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
   }
 };
 

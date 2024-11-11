@@ -10,6 +10,8 @@ import Help from '../views/Help/Help.vue'
 import Signup from '../views/Auth/Signup.vue'
 import Login from '../views/Auth/Login.vue'
 import UserProfile from '../views/User/UserProfile.vue'
+import {getToken} from "../utils/auth.js";
+import ProgramListManger from "../admin/componments/ProgramListManger.vue";
 
 const routes = [
   {
@@ -20,7 +22,8 @@ const routes = [
   {
     path: '/problem',
     name: 'ProblemList',
-    component: ProblemList
+    component: ProblemList,
+    meta: {requiresAuthLevel: 1}
   },
   {
     path: '/problem/:id',
@@ -66,13 +69,42 @@ const routes = [
     path: '/profile',
     name: 'UserProfile',
     component: UserProfile,
-    meta: { requiresAuth: true }
+    meta: { requiresAuthLevel: 1}
+  },
+  {
+    path: '/ProgramListManger',
+    name: 'ProgramListManger',
+    component: ProgramListManger,
+    meta: { requiresAuthLevel: 2}
   }
+
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+router.beforeEach( (to,from,next)=>{
+  const token = getToken();
+  const role = localStorage.getItem("role");
+  const log = !!token;
+  console.log(role)
+  console.log(to.meta.requiresAuthLevel);
+  if(!!to.meta.requiresAuthLevel){
+    console.log('权限识别')
+    if(!log){
+      next('/login');
+      console.log('work')
+    }else if(role < to.meta.requiresAuthLevel){
+      next('/login');
+    }else{
+      next();
+    }
+  }else {
+    next();
+  }
+
+})
+
 
 export default router

@@ -16,6 +16,7 @@
             <span class="tag">数论</span>
             <span class="tag">0</span>
             <!-- 添加更多标签 -->
+            <span class="tag" v-for="tag in tags" :key="tag.id">{{tag.id}}</span>
           </div>
         </div>
       </div>
@@ -25,6 +26,17 @@
 
 <script setup>
 import ProblemTable from './components/ProblemTable.vue'
+import axios from "axios";
+import {onMounted, ref} from "vue";
+import http from "../../http/http.js";
+ const tags = ref([]);
+ const getTags = async ()=>{
+  const response = await http.get("/problem/tag");
+  tags.value = response.data;
+ }
+ onMounted(()=>{
+   getTags();
+ })
 </script>
 
 <style scoped>
