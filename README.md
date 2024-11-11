@@ -1,3 +1,4 @@
+```
 src/
 ├── components/ # 通用组件
 ├── views/ # 页面组件
@@ -13,3 +14,4 @@ src/
 ├── router/ # 路由配置
 ├── assets/ # 静态资源
 └── App.vue # 根组件
+```
