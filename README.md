@@ -1,1 +1,1 @@
-# stuoj-frontend
+# stuoj-web
