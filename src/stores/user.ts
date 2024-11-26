@@ -27,7 +27,7 @@ export const userStore = createGlobalState(() => {
       console.error(err);
       ElNotification({
         title: "错误",
-        message: err.message || "未知错误",
+        message: err.value.message || "未知错误",
         type: "error"
       });
     }
@@ -49,7 +49,7 @@ export const userStore = createGlobalState(() => {
         console.error(err);
         ElNotification({
           title: "错误",
-          message: err.response.data.error || err.message,
+          message: err.value.message || '未知错误',
           type: "error"
         });
       }

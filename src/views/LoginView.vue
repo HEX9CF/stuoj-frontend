@@ -43,11 +43,11 @@ const handleLogin = async () => {
                 type: "success"
             });
         }
-    }).catch((err:Error) => {
-        console.error(err);
+    }).catch(e => {
+        console.error(e.value.message);
         ElNotification({
             title: "错误",
-            message: err.message || "未知错误",
+            message: e.value.message || "未知错误",
             type: "error"
         });
     });
