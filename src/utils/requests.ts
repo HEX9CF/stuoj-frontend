@@ -1,6 +1,7 @@
 import axios, { type AxiosRequestConfig } from "axios";
 import { useAsyncState } from "@vueuse/core";
 import type { ApiResponse } from "@/types/ApiResponse";
+import { ElNotification } from "element-plus";
 
 const instance = axios.create({
   baseURL: '/api',
@@ -59,8 +60,15 @@ export const request = <T>(config: AxiosRequestConfig) => {
     {
       immediate: false,
       shallow: false as any,
-      throwError: true,
-      resetOnExecute: false
-    }
-  );
+      throwError: false,
+      resetOnExecute: false,
+      onError: (e:any) => {
+        console.error(e);
+        ElNotification({
+          title: "错误",
+          message: e.message || "未知错误",
+          type: "error"
+        });
+      }
+    });
 }

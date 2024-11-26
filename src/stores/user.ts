@@ -18,18 +18,9 @@ export const userStore = createGlobalState(() => {
   const info = ref<BaseUserInfo>();
 
   const getId = async () => {
-    try {
-      const state = await getIdExecute();
-      if (state.value) {
-        id.value = state.value.data as number;
-      }
-    } catch (err: Error | any) {
-      console.error(err);
-      ElNotification({
-        title: "错误",
-        message: err.value.message || "未知错误",
-        type: "error"
-      });
+    const state = await getIdExecute();
+    if (state.value) {
+      id.value = state.value.data as number;
     }
   };
 
@@ -38,24 +29,14 @@ export const userStore = createGlobalState(() => {
     if (userInfo) {
       info.value = userInfo;
     } else {
-      try {
-        const state = await execute({
-          parmas: { id: id.value }
-        });
-        if (state.value) {
-          info.value = state.value.data as BaseUserInfo;
-        }
-      } catch (err: any) {
-        console.error(err);
-        ElNotification({
-          title: "错误",
-          message: err.value.message || '未知错误',
-          type: "error"
-        });
+      const state = await execute({
+        parmas: { id: id.value }
+      });
+      if (state.value) {
+        info.value = state.value.data as BaseUserInfo;
       }
-    }
+    };
   };
-
   return {
     getId,
     getUserInfo,
