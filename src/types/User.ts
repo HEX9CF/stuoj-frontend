@@ -12,7 +12,6 @@ export interface BaseUserInfo {
      * 用户id，ID 编号
      */
     id: number;
-    password: string;
     /**
      * 角色
      */

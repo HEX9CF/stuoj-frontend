@@ -2,14 +2,13 @@ import axios, { type AxiosRequestConfig } from "axios";
 import { useAsyncState } from "@vueuse/core";
 import type { ApiResponse } from "@/types/ApiResponse";
 import { ElNotification } from "element-plus";
+import { userStore } from "@/stores/user";
+
+
 
 const instance = axios.create({
   baseURL: '/api',
   timeout: 1000 * 10,
-  headers: {
-    'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
-    'Content-Type': 'application/json',
-  },
 });
 
 
@@ -17,19 +16,20 @@ instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   return response;
 }, function (error) {
+  const { updateToken, token } = userStore();
   // 对响应错误做点什么
   if (error.response && error.response.status === 401) {
     localStorage.removeItem('token');
     if (error.response.data.code === 2) {
       const retryRequestConfig = error.config;
-      localStorage.setItem('token', error.response.data.data);
-      retryRequestConfig.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+      updateToken(error.response.data.data);
+      retryRequestConfig.headers['Authorization'] = `Bearer ${token.value}`;
 
       return axios(retryRequestConfig).then(response => {
         return response;
       });
     }
-    location.reload();
+    // location.reload();
   } else if (error.response) {
     return error.response;
   }
@@ -52,8 +52,14 @@ const _req = async <T>(config: AxiosRequestConfig): Promise<ApiResponse<T> | und
 export const request = <T>(config: AxiosRequestConfig) => {
   return useAsyncState<ApiResponse<T> | undefined, AxiosRequestConfig[]>(
     async (config2) => {
-      config = Object.assign({}, config, config2);
-      const result = await _req<T>(config);
+      if (config2 && config2.url)
+      {
+        config2.url = config.url + config2.url;
+      }
+
+      config2 = Object.assign({}, config, config2);
+
+      const result = await _req<T>(config2);
       return result as ApiResponse<T>;
     },
     undefined,
@@ -62,7 +68,7 @@ export const request = <T>(config: AxiosRequestConfig) => {
       shallow: false as any,
       throwError: false,
       resetOnExecute: false,
-      onError: (e:any) => {
+      onError: (e: any) => {
         console.error(e);
         ElNotification({
           title: "错误",

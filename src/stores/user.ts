@@ -18,7 +18,13 @@ export const userStore = createGlobalState(() => {
   const info = ref<BaseUserInfo>();
 
   const getId = async () => {
-    const state = await getIdExecute();
+    const state = await getIdExecute(
+      {
+        headers: {
+          Authorization: `Bearer ${token.value}`
+        }
+      }
+    )
     if (state.value) {
       id.value = state.value.data as number;
     }
@@ -26,13 +32,21 @@ export const userStore = createGlobalState(() => {
 
 
   const getUserInfo = async (userInfo?: BaseUserInfo) => {
+
     if (userInfo) {
       info.value = userInfo;
     } else {
+      // if (id.value === 0) {
+      await getId();
+      // }
       const state = await execute({
-        parmas: { id: id.value }
-      });
+        headers: {
+          Authorization: `Bearer ${token.value}`
+        },
+        url: "/"+id.value.toString()
+      })
       if (state.value) {
+        console.log(state.value);
         info.value = state.value.data as BaseUserInfo;
       }
     };

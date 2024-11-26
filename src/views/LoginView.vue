@@ -25,25 +25,27 @@ import { ElNotification, type FormItemProps } from 'element-plus';
 
 const req = ref<LoginReq>({ email: '', password: '' });
 const itemLabelPosition = ref<FormItemProps['labelPosition']>('right')
-const { updateToken } = userStore();
+const { updateToken, getUserInfo } = userStore();
 
 const handleLogin = async () => {
     const { execute } = LoginApi();
-    await execute({
+    const state = await execute({
         data: {
             email: req.value.email,
             password: req.value.password
         }
-    }).then((res) => {
-        if (res.value) {
-            updateToken(res.value.data as string);
-            ElNotification({
-                title: "成功",
-                message: "登录成功",
-                type: "success"
-            });
-        }
     })
+    if (state.value) {
+        updateToken(state.value.data as string);
+        // await getId();
+        getUserInfo();
+        ElNotification({
+            title: "成功",
+            message: "登录成功",
+            type: "success"
+        });
+    }
+
 };
 
 </script>

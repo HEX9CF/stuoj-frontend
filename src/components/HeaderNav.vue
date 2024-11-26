@@ -4,12 +4,23 @@
             <el-col :span="4" class="header-nav__logo">
                 <el-text class="mx-2" size="large" tag="ins">Logo</el-text>
             </el-col>
+            <el-col :span="16" class="header-nav__menu">
+            </el-col>
+            <el-col :span="4" class="header-nav__user">
+                <el-text class="mx-2" size="large">{{ username }}</el-text>
+            </el-col>
         </el-row>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
+import { userStore } from '@/stores/user';
+
+const {info}=userStore();
+
+const username=ref(info?.value?.username||'未登录')
+
 
 </script>
 
