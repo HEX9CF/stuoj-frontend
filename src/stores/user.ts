@@ -46,7 +46,6 @@ export const userStore = createGlobalState(() => {
         url: "/"+id.value.toString()
       })
       if (state.value) {
-        console.log(state.value);
         info.value = state.value.data as BaseUserInfo;
       }
     };

@@ -14,13 +14,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref,watchEffect } from 'vue';
 import { userStore } from '@/stores/user';
 
 const {info}=userStore();
-
 const username=ref(info?.value?.username||'未登录')
 
+watchEffect(() => {
+    username.value = info.value?.username || '未登录';
+});
 
 </script>
 
