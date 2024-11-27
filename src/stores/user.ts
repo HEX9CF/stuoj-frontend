@@ -1,6 +1,5 @@
 import { computed, ref } from "vue";
 import { ROLE, type BaseUserInfo } from "@/types/User";
-import { ElNotification } from "element-plus";
 import { GetUserInfo, GetId } from "@/apis/user";
 import { createGlobalState, useStorage } from "@vueuse/core";
 
@@ -8,7 +7,8 @@ export const userStore = createGlobalState(() => {
   const { execute: getIdExecute } = GetId();
   const { execute } = GetUserInfo();
 
-  const token = useStorage<string>("userToken", "");
+  const token = useStorage("token", "");
+
   const updateToken = (_token: string) => {
     token.value = _token;
   };
@@ -36,20 +36,25 @@ export const userStore = createGlobalState(() => {
     if (userInfo) {
       info.value = userInfo;
     } else {
-      // if (id.value === 0) {
+      if (id.value === 0) {
       await getId();
-      // }
+      }
       const state = await execute({
         headers: {
           Authorization: `Bearer ${token.value}`
         },
-        url: "/"+id.value.toString()
+        url: "/" + id.value.toString()
       })
       if (state.value) {
         info.value = state.value.data as BaseUserInfo;
       }
     };
   };
+
+  if (token.value !== "") {
+    getUserInfo();
+  }
+
   return {
     getId,
     getUserInfo,

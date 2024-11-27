@@ -1,7 +1,7 @@
 <template>
-    <div class="layout">
+    <div style="width: 100%; justify-content: center;">
         <ElForm :model="req" label-width="auto">
-            <ElFormItem label="email" :label-position="itemLabelPosition">
+            <ElFormItem label="Email" :label-position="itemLabelPosition">
                 <ElInput v-model="req.email" />
             </ElFormItem>
             <ElFormItem label="Password" :label-position="itemLabelPosition">
@@ -22,6 +22,7 @@ import { LoginApi } from '@/apis/auth';
 import type { LoginReq } from '@/types/User';
 import { userStore } from '@/stores/user'
 import { ElNotification, type FormItemProps } from 'element-plus';
+import router from '@/router';
 
 const req = ref<LoginReq>({ email: '', password: '' });
 const itemLabelPosition = ref<FormItemProps['labelPosition']>('right')
@@ -44,8 +45,8 @@ const handleLogin = async () => {
             message: "登录成功",
             type: "success"
         });
+        router.push({ path: '/' });
     }
-
 };
 
 </script>

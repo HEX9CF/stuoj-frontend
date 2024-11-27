@@ -16,6 +16,7 @@ export const LoginApi = useDefineApi<
 export const RegisterApi = useDefineApi<
     {
         data: {
+            username: string;
             email: string;
             password: string;
         };
