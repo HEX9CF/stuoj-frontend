@@ -17,6 +17,7 @@ declare module 'vue' {
     ElRow: typeof import('element-plus/es')['ElRow']
     ElText: typeof import('element-plus/es')['ElText']
     HeaderNav: typeof import('./components/HeaderNav.vue')['default']
+    LogoutButton: typeof import('./components/LogoutButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

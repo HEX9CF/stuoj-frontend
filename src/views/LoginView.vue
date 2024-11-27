@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100%; justify-content: center;">
+    <ElContainer style="width: 100%; justify-content: center;" direction="vertical">
         <ElForm :model="req" label-width="auto">
             <ElFormItem label="Email" :label-position="itemLabelPosition">
                 <ElInput v-model="req.email" />
@@ -13,7 +13,8 @@
                 </ElButton>
             </ElFormItem>
         </ElForm>
-    </div>
+        <ElButton type="primary" @click="handleRegister_" link>Register</ElButton>
+    </ElContainer>
 </template>
 
 <script setup lang="ts">
@@ -41,12 +42,15 @@ const handleLogin = async () => {
         // await getId();
         getUserInfo();
         ElNotification({
-            title: "成功",
-            message: "登录成功",
+            title: "登录成功",
             type: "success"
         });
         router.push({ path: '/' });
     }
+};
+
+const handleRegister_ = () => {
+    router.push({ path: '/register' });
 };
 
 </script>

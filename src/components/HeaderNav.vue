@@ -7,7 +7,9 @@
             <el-col :span="16" class="header-nav__menu">
             </el-col>
             <el-col :span="4" class="header-nav__user">
-                <el-text class="mx-2" size="large">{{ username }}</el-text>
+                <el-text class="mx-2" size="large">{{username}}</el-text>
+                <ElButton v-if="!isLogin" type="primary" @click="handelLogin_">登录</ElButton>
+                <LogoutButton v-if="isLogin" />
             </el-col>
         </el-row>
     </div>
@@ -16,13 +18,18 @@
 <script setup lang="ts">
 import { ref,watchEffect } from 'vue';
 import { userStore } from '@/stores/user';
+import router from '@/router';
 
-const {info}=userStore();
+const {info,isLogin}=userStore();
 const username=ref(info?.value?.username||'未登录')
 
 watchEffect(() => {
     username.value = info.value?.username || '未登录';
 });
+
+const handelLogin_ = async () => {
+    router.push({ path: '/login' });
+};
 
 </script>
 

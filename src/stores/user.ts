@@ -1,4 +1,4 @@
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { ROLE, type BaseUserInfo } from "@/types/User";
 import { GetUserInfo, GetId } from "@/apis/user";
 import { createGlobalState, useStorage } from "@vueuse/core";
@@ -11,6 +11,9 @@ export const userStore = createGlobalState(() => {
 
   const updateToken = (_token: string) => {
     token.value = _token;
+  };
+  const clearToken = () => {
+    token.value = "";
   };
 
   const id = ref(0);
@@ -37,7 +40,7 @@ export const userStore = createGlobalState(() => {
       info.value = userInfo;
     } else {
       if (id.value === 0) {
-      await getId();
+        await getId();
       }
       const state = await execute({
         headers: {
@@ -51,9 +54,14 @@ export const userStore = createGlobalState(() => {
     };
   };
 
-  if (token.value !== "") {
-    getUserInfo();
-  }
+  watchEffect(() => {
+    if (isLogin.value) {
+      getUserInfo();
+    }else{
+      info.value = undefined;
+      id.value = 0;
+    }
+  });
 
   return {
     getId,
@@ -62,6 +70,7 @@ export const userStore = createGlobalState(() => {
     info,
     token,
     updateToken,
-    isLogin
+    isLogin,
+    clearToken,
   };
 });

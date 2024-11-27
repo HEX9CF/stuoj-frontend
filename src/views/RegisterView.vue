@@ -4,7 +4,7 @@
             <ElFormItem label="Username" :label-position="itemLabelPosition">
                 <ElInput v-model="req.username" />
             </ElFormItem>
-            <ElFormItem label="email" :label-position="itemLabelPosition">
+            <ElFormItem label="Email" :label-position="itemLabelPosition">
                 <ElInput v-model="req.email" />
             </ElFormItem>
             <ElFormItem label="Password" :label-position="itemLabelPosition">
