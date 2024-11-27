@@ -12,7 +12,6 @@ export interface BaseUserInfo {
      * 用户id，ID 编号
      */
     id: number;
-    password: string;
     /**
      * 角色
      */
@@ -43,4 +42,10 @@ export const role = {
 export interface LoginReq{
     email: string;
     password: string;
-} 
+}
+
+export interface RegisterReq{
+    username: string;
+    email: string;
+    password: string;
+}

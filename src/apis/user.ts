@@ -2,14 +2,10 @@ import { useDefineApi } from "@/stores/useDefineApi"
 import type { BaseUserInfo } from "@/types/User";
 
 export const GetUserInfo = useDefineApi<
-    {
-        parmas: {
-            id: number;
-        }
-    },
+    {},
     BaseUserInfo
 >({
-    url: "/user/info",
+    url:  "/user",
     method: "GET"
 });
 
