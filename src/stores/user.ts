@@ -18,7 +18,15 @@ export const userStore = createGlobalState(() => {
 
   const id = ref(0);
   const isLogin = computed(() => token.value !== "");
-  const info = ref<BaseUserInfo>();
+  const info = ref<BaseUserInfo>({
+    avatar: "",
+    create_time: "",
+    email: "",
+    id: 0,
+    role: ROLE.Visitor,
+    update_time: "",
+    username: "未登录",
+  });
 
   const getId = async () => {
     if(!isLogin.value)
