@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@pinia/nuxt": "^0.7.0",
     "@types/axios": "^0.9.36",
     "@vitejs/plugin-vue-jsx": "^4.1.0",

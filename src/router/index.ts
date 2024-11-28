@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { onMounted } from 'vue';
+import { userStore } from '@/stores/user';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,16 +19,20 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path:'/login',
-      name:'login',
+      path: '/login',
+      name: 'login',
       component: () => import('../views/LoginView.vue'),
     },
     {
-      path:'/register',
-      name:'register',
+      path: '/register',
+      name: 'register',
       component: () => import('../views/RegisterView.vue'),
     }
   ],
 })
+
+router.beforeEach(async (to: any, from: any, next) => {
+  next();
+});
 
 export default router

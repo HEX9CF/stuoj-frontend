@@ -39,13 +39,13 @@ const handleLogin = async () => {
     })
     if (state.value) {
         updateToken(state.value.data as string);
-        // await getId();
-        getUserInfo();
         ElNotification({
             title: "登录成功",
             type: "success"
         });
-        router.push({ path: '/' });
+        router.push({ path: '/' }).then(() => {
+            window.location.reload();
+        });
     }
 };
 

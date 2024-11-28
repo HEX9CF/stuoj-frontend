@@ -2,8 +2,10 @@
     <HeaderNav />
     <RouterView class="router-view" />
 </template>
+
 <script setup lang="ts">
-// import HeaderNav from "./components/HeaderNav.vue";
+
+
 </script>
 
 <style>
