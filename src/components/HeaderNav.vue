@@ -1,6 +1,6 @@
 <template>
     <div class="header-nav">
-        <el-row class="header-nav__row">
+        <el-row class="header-nav__row" :gutter="20">
             <el-col :span="4" class="header-nav__logo">
                 <el-text class="mx-2" size="large" tag="ins">Logo</el-text>
             </el-col>

@@ -5,9 +5,22 @@ export const GetUserInfo = useDefineApi<
     {},
     BaseUserInfo
 >({
-    url:  "/user",
+    url: "/user",
     method: "GET"
 });
+
+export const ModifyUserInfo = useDefineApi<
+    {
+        username?: string;
+        email?: string;
+        signature?: string;
+    },
+    null
+>({
+    url: "/user/modify",
+    method: "PUT"
+});
+
 
 export const GetId = useDefineApi<
     {},
@@ -15,4 +28,22 @@ export const GetId = useDefineApi<
 >({
     url: "/user/current",
     method: "GET"
-})
+});
+
+export const UploadAvatar = useDefineApi<
+    {},
+    null
+>({
+    url: "/user/avatar",
+    method: "POST"
+});
+
+export const ModifyPassword = useDefineApi<
+    {
+        password: string;
+    },
+    null
+>({
+    url: "/user/password",
+    method: "PUT"
+});
