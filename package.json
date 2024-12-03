@@ -11,9 +11,11 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@pinia/nuxt": "^0.7.0",
     "@types/axios": "^0.9.36",
     "@vitejs/plugin-vue-jsx": "^4.1.0",
+    "@vueuse/router": "^12.0.0",
     "axios": "^1.7.7",
     "echarts": "^5.5.1",
     "element-plus": "^2.8.8",
@@ -27,6 +29,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
     "npm-run-all2": "^7.0.1",
+    "sass-embedded": "^1.81.0",
     "typescript": "~5.6.3",
     "vite": "^5.4.10",
     "vite-plugin-vue-devtools": "^7.5.4",

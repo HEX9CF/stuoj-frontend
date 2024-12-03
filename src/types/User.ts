@@ -28,7 +28,7 @@ export enum ROLE {
     Visitor = -1,
     Banned = 0,
     User = 1,
-    Adimin = 2,
+    Admin = 2,
     Root = 3,
 }
 
@@ -36,6 +36,7 @@ export const role = {
     [ROLE.Visitor]: "Visitor",
     [ROLE.Banned]: "Banned",
     [ROLE.User]: "User",
+    [ROLE.Admin]: "Admin",
     [ROLE.Root]: "Root"
 };
 

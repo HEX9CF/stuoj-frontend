@@ -16,10 +16,10 @@ instance.interceptors.response.use(function (response) {
   // 对响应数据做点什么
   return response;
 }, function (error) {
-  const { updateToken, token } = userStore();
+  const { updateToken, token, clearToken } = userStore();
   // 对响应错误做点什么
   if (error.response && error.response.status === 401) {
-    localStorage.removeItem('token');
+    clearToken();
     if (error.response.data.code === 2) {
       const retryRequestConfig = error.config;
       updateToken(error.response.data.data);
@@ -28,8 +28,9 @@ instance.interceptors.response.use(function (response) {
       return axios(retryRequestConfig).then(response => {
         return response;
       });
+    } else {
+      return error.response;
     }
-    // location.reload();
   } else if (error.response) {
     return error.response;
   }
@@ -52,13 +53,10 @@ const _req = async <T>(config: AxiosRequestConfig): Promise<ApiResponse<T> | und
 export const request = <T>(config: AxiosRequestConfig) => {
   return useAsyncState<ApiResponse<T> | undefined, AxiosRequestConfig[]>(
     async (config2) => {
-      if (config2 && config2.url)
-      {
+      if (config2 && config2.url) {
         config2.url = config.url + config2.url;
       }
-
       config2 = Object.assign({}, config, config2);
-
       const result = await _req<T>(config2);
       return result as ApiResponse<T>;
     },

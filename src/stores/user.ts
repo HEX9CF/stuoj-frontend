@@ -1,4 +1,4 @@
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect} from "vue";
 import { ROLE, type BaseUserInfo } from "@/types/User";
 import { GetUserInfo, GetId } from "@/apis/user";
 import { createGlobalState, useStorage } from "@vueuse/core";
@@ -18,9 +18,19 @@ export const userStore = createGlobalState(() => {
 
   const id = ref(0);
   const isLogin = computed(() => token.value !== "");
-  const info = ref<BaseUserInfo>();
+  const info = ref<BaseUserInfo>({
+    avatar: "",
+    create_time: "",
+    email: "",
+    id: 0,
+    role: ROLE.Visitor,
+    update_time: "",
+    username: "未登录",
+  });
 
   const getId = async () => {
+    if(!isLogin.value)
+      return;
     const state = await getIdExecute(
       {
         headers: {
@@ -35,7 +45,8 @@ export const userStore = createGlobalState(() => {
 
 
   const getUserInfo = async (userInfo?: BaseUserInfo) => {
-
+    if(!isLogin.value)
+      return;
     if (userInfo) {
       info.value = userInfo;
     } else {
@@ -47,21 +58,12 @@ export const userStore = createGlobalState(() => {
           Authorization: `Bearer ${token.value}`
         },
         url: "/" + id.value.toString()
-      })
+      });
       if (state.value) {
         info.value = state.value.data as BaseUserInfo;
       }
     };
   };
-
-  watchEffect(() => {
-    if (isLogin.value) {
-      getUserInfo();
-    }else{
-      info.value = undefined;
-      id.value = 0;
-    }
-  });
 
   return {
     getId,
