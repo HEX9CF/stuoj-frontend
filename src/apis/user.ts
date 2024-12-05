@@ -1,5 +1,5 @@
 import { useDefineApi } from "@/stores/useDefineApi"
-import type { BaseUserInfo } from "@/types/User";
+import type { BaseUserInfo } from "@/types/User"
 
 export const GetUserInfo = useDefineApi<
     {},
