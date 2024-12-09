@@ -3,7 +3,7 @@ import type { ProblemInfo, Tag } from "@/types/Problem";
 
 export const getProblemListApi = useDefineApi<
     {
-        pamars: {
+        params: {
             page: number,
             size?: number,
             title?: string,
@@ -25,7 +25,7 @@ export const getProblemApi = useDefineApi<
     },
     ProblemInfo
 >({
-    url: "/problem/:id",
+    url: "/problem",
     method: "get"
 });
 
