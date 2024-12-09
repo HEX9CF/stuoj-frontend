@@ -53,11 +53,14 @@ export const userStore = createGlobalState(() => {
       if (id.value === 0) {
         await getId();
       }
+      if (id.value === 0) {
+        return;
+      }
       const state = await execute({
         headers: {
           Authorization: `Bearer ${token.value}`
         },
-        url: "/" + id.value.toString()
+        id: id.value
       });
       if (state.value) {
         info.value = state.value.data as BaseUserInfo;

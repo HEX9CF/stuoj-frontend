@@ -2,7 +2,9 @@ import { useDefineApi } from "@/stores/useDefineApi"
 import type { BaseUserInfo } from "@/types/User"
 
 export const GetUserInfo = useDefineApi<
-    {},
+    {
+        id: number;
+    },
     BaseUserInfo
 >({
     url: "/user",
@@ -11,6 +13,7 @@ export const GetUserInfo = useDefineApi<
 
 export const ModifyUserInfo = useDefineApi<
     {
+        id: number;
         username?: string;
         email?: string;
         signature?: string;
@@ -31,7 +34,9 @@ export const GetId = useDefineApi<
 });
 
 export const UploadAvatar = useDefineApi<
-    {},
+    {
+        id: number;
+    },
     null
 >({
     url: "/user/avatar",
@@ -40,6 +45,7 @@ export const UploadAvatar = useDefineApi<
 
 export const ModifyPassword = useDefineApi<
     {
+        id: number;
         password: string;
     },
     null
