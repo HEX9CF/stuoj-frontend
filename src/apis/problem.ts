@@ -1,5 +1,5 @@
 import { useDefineApi } from "@/stores/useDefineApi";
-import type { ProblemInfo, Tag } from "@/types/Problem";
+import type { ProblemInfo, Solution, Tag } from "@/types/Problem";
 import type { Page } from "@/types/misc";
 
 export const getProblemListApi = useDefineApi<
@@ -24,7 +24,11 @@ export const getProblemApi = useDefineApi<
     {
         id: number
     },
-    ProblemInfo
+    {
+        problem: ProblemInfo
+        tags: Tag[]
+        solutions?: Solution[]
+    }
 >({
     url: "/problem",
     method: "get"

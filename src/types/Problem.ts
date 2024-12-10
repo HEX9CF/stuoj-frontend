@@ -23,3 +23,11 @@ export interface Tag {
     ProblemTag: null;
     [property: string]: any;
 }
+
+export interface Solution {
+    id: number;
+    language_id: number;
+    problem_id: number;
+    source_code: string;
+    [property: string]: any;
+}
