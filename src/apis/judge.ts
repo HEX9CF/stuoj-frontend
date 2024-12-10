@@ -23,7 +23,7 @@ export const GetLanguages = useDefineApi<
 
 export const TestRun = useDefineApi<
     {
-        Stdin: string;
+        stdin: string;
         language_id: number;
         source_code: string;
     },

@@ -3,7 +3,7 @@ import { useAsyncState } from "@vueuse/core";
 import type { ApiResponse } from "@/types/ApiResponse";
 import { ElNotification } from "element-plus";
 import { userStore } from "@/stores/user";
-
+import type { AxiosRequestConfig2 } from "@/stores/useDefineApi"
 
 
 const instance = axios.create({
@@ -51,10 +51,10 @@ const _req = async <T>(config: AxiosRequestConfig): Promise<ApiResponse<T> | und
 };
 
 export const request = <T>(config: AxiosRequestConfig) => {
-  return useAsyncState<ApiResponse<T> | undefined, AxiosRequestConfig[]>(
+  return useAsyncState<ApiResponse<T> | undefined, AxiosRequestConfig2[]>(
     async (config2) => {
-      if (config2 && config2.url) {
-        config2.url = config.url + config2.url;
+      if (config2 && config2.id) {
+        config2.url = config.url + "/" + config2.id;
       }
       config2 = Object.assign({}, config, config2);
       const result = await _req<T>(config2);

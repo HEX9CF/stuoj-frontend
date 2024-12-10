@@ -43,7 +43,7 @@ const handleLogin = async () => {
             title: "登录成功",
             type: "success"
         });
-        router.push({ path: '/' }).then(() => {
+        router.push({ name: 'home' }).then(() => {
             window.location.reload();
         });
     }

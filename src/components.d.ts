@@ -16,7 +16,6 @@ declare module 'vue' {
     ElDivider: typeof import('element-plus/es')['ElDivider']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElPopover: typeof import('element-plus/es')['ElPopover']
@@ -26,7 +25,6 @@ declare module 'vue' {
     LogoutButton: typeof import('./components/LogoutButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ToUserInfoButton: typeof import('./components/ToUserSettingButton.vue')['default']
     ToUserSettingButton: typeof import('./components/ToUserSettingButton.vue')['default']
   }
 }
