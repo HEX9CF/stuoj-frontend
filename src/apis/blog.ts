@@ -1,5 +1,6 @@
 import { useDefineApi } from "@/stores/useDefineApi";
 import type { BlogInfo } from "@/types/Blog";
+import type { Page } from "@/types/misc";
 
 export const getBlogListApi = useDefineApi<
     {
@@ -14,7 +15,7 @@ export const getBlogListApi = useDefineApi<
             "end-time"?: string
         };
     },
-    BlogInfo
+    Page<"blogs", BlogInfo>
 >({
     url: "/blog",
     method: "get"

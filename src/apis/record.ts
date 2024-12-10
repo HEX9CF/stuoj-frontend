@@ -1,4 +1,5 @@
 import { useDefineApi } from "@/stores/useDefineApi"
+import type { Page } from "@/types/misc";
 import type { Judgement, Submission } from "@/types/Record"
 
 export const getRecordeList = useDefineApi<
@@ -14,7 +15,7 @@ export const getRecordeList = useDefineApi<
             user?: number;
         }
     },
-    Judgement
+    Page<"submissions", Submission>
 >({
     url: "/record",
     method: "get"
