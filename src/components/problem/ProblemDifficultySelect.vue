@@ -9,7 +9,7 @@ import { ref, defineProps, defineEmits, watch } from 'vue';
 import { Difficulty,DifficultyMap } from '@/types/Problem';
 const props = defineProps({
     modelValue: {
-        type: [Number, null],
+        type: [Number, String],
         default: null,
     },
 });
@@ -59,7 +59,7 @@ const handleSelectChange = (value: number) => {
     selectedValue.value = value;
 };
 const reset = () => {
-    selectedValue.value = null;
+    selectedValue.value = "";
 };
 defineExpose({
     reset,
