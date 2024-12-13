@@ -27,6 +27,7 @@
     "@tsconfig/node22": "^22.0.0",
     "@types/node": "^22.9.0",
     "@vitejs/plugin-vue": "^5.1.4",
+    "@vue/compiler-sfc": "^3.5.13",
     "@vue/tsconfig": "^0.5.1",
     "npm-run-all2": "^7.0.1",
     "sass-embedded": "^1.81.0",
