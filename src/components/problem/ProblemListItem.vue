@@ -25,3 +25,38 @@ const { info } = userStore();
 const props = defineProps<{ problem: ProblemInfo }>();
 const difficultyString = ref<string>(DifficultyMap[props.problem.difficulty]);
 </script>
+
+<style scoped>
+.problem-list-item {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* 调整间距 */
+    padding: 8px; /* 添加内边距 */
+    border-bottom: 1px solid #eaeaea; /* 添加底部边框 */
+}
+
+.problem-list-item__id,
+.problem-list-item__title,
+.problem-list-item__status,
+.problem-list-item__difficulty {
+    font-size: 14px; /* 统一字体大小 */
+}
+
+.problem-list-item__title {
+    color: #007bff; /* 设置链接颜色 */
+    text-decoration: none; /* 去掉下划线 */
+}
+
+.problem-list-item__title:hover {
+    text-decoration: underline; /* 鼠标悬停时显示下划线 */
+}
+
+.problem-list-item__status {
+    font-weight: bold; /* 加粗状态文本 */
+}
+
+.problem-list-item__difficulty {
+    color: #5cb85c; /* 设置难度颜色 */
+    margin-left: auto; /* 确保难度项靠右 */
+}
+</style>
