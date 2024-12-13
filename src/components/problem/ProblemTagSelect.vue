@@ -3,6 +3,16 @@
         标签
     </ElButton>
     <ElDialog v-model="tagDialogVisible">
+        <template #header>
+            <div class="my-header">
+                <el-button type="danger" @click="reset()">
+                    <el-icon class="el-icon--left">
+                        <CircleCloseFilled />
+                    </el-icon>
+                    重置
+                </el-button>
+            </div>
+        </template>
         <div class="flex gap-2">
             <ElCheckTag v-for="tag in wsTags" :key="tag.data.id" v-model:checked="tag.checked" :label="tag.data.name">
                 {{ tag.data.name }}
@@ -30,7 +40,6 @@ const props = defineProps({
         default: null,
     },
 });
-
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -72,9 +81,32 @@ const handleConfirm = () => {
 
 const handleCancel = () => {
     if (savedWsTags !== null) {
-        wsTags.value =JSON.parse(JSON.stringify(savedWsTags));
+        wsTags.value = JSON.parse(JSON.stringify(savedWsTags));
     }
     tagDialogVisible.value = false;
     savedWsTags = null; // 取消后清空保存的状态
 };
+
+const reset = () => {
+    wsTags.value = wsTags.value.map(tag => ({ ...tag, checked: false }));
+};
+
+const resetAndConfirm = () => {
+    reset();
+    handleConfirm();
+};
+defineExpose({
+    resetAndConfirm,
+});
 </script>
+
+<style scoped>
+.my-header {
+    display: flex;
+    justify-content: flex-end; /* 将内容推到右侧 */
+}
+
+.reset-button {
+    margin-left: auto; /* 确保按钮靠右 */
+}
+</style>
