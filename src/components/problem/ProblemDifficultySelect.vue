@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, watch } from 'vue';
-
+import { Difficulty,DifficultyMap } from '@/types/Problem';
 const props = defineProps({
     modelValue: {
         type: [Number, String],
@@ -16,32 +16,32 @@ const props = defineProps({
 
 const options = [
     {
-        value: 0,
-        label: '暂无评定',
+        value: Difficulty.unknown,
+        label: DifficultyMap[Difficulty.unknown],
     },
     {
-        value: 1,
-        label: '普及−',
+        value: Difficulty.easy,
+        label: DifficultyMap[Difficulty.easy],
     },
     {
-        value: 2,
-        label: '普及/提高−',
+        value: Difficulty.medium,
+        label: DifficultyMap[Difficulty.medium],
     },
     {
-        value: 3,
-        label: '普及+/提高',
+        value: Difficulty.hard,
+        label: DifficultyMap[Difficulty.hard],
     },
     {
-        value: 4,
-        label: '提高+/省选−',
+        value: Difficulty.expert,
+        label: DifficultyMap[Difficulty.expert],
     },
     {
-        value: 5,
-        label: '省选/NOI',
+        value: Difficulty.legend,
+        label: DifficultyMap[Difficulty.legend],
     },
     {
-        value: 6,
-        label: 'NOI/NOI+/CTSC',
+        value: Difficulty.master,
+        label: DifficultyMap[Difficulty.master],
     }
 ]
 

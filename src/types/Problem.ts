@@ -1,7 +1,7 @@
 export interface ProblemInfo {
     create_time: string;
     description?: string;
-    difficulty: number;
+    difficulty: Difficulty;
     hint?: string;
     id: number;
     input?: string;
@@ -119,4 +119,24 @@ export interface FpsSolution {
     source_code: string;
     update_time: string;
     [property: string]: any;
+}
+
+export enum Difficulty{
+    unknown = 0,
+    easy = 1,
+    medium = 2,
+    hard = 3,
+    expert = 4,
+    master = 5,
+    legend = 6,
+}
+
+export const DifficultyMap = {
+    [Difficulty.unknown]: "暂无评定",
+    [Difficulty.easy]: "普及−",
+    [Difficulty.medium]: "普及/提高−",
+    [Difficulty.hard]: "普及+/提高",
+    [Difficulty.expert]: "提高+/省选−",
+    [Difficulty.master]: "省选/NOI",
+    [Difficulty.legend]: "NOI/NOI+/CTSC",
 }
