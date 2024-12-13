@@ -37,9 +37,9 @@ const router = createRouter({
       meta:{permission: ROLE.Visitor, },
     },
     {
-      path:'/problem',
+      path:'/problems',
       name:'problems',
-      component: () => import('../views/ProblemListView.vue'),
+      component: () => import('../views/problem/ProblemListView.vue'),
       meta:{permission: ROLE.Visitor, },
     },
     // {

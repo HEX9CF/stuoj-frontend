@@ -8,6 +8,13 @@
                 <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
         </el-form-item>
+        <el-form-item label-width="auto">
+            <ProblemTagSelect />
+        </el-form-item>
+        <el-form-item>
+            <el-button>重置</el-button>
+            <el-button type="primary" @click="getList">查询</el-button>
+        </el-form-item>
     </ElForm>
 </template>
 

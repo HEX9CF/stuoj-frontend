@@ -7,8 +7,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    Avatar: typeof import('./components/Avatar.vue')['default']
-    AvatarInfo: typeof import('./components/AvatarInfo.vue')['default']
+    Avatar: typeof import('./components/user/Avatar.vue')['default']
+    AvatarInfo: typeof import('./components/user/AvatarInfo.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckTag: typeof import('element-plus/es')['ElCheckTag']
@@ -16,15 +16,20 @@ declare module 'vue' {
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDivider: typeof import('element-plus/es')['ElDivider']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElText: typeof import('element-plus/es')['ElText']
     HeaderNav: typeof import('./components/HeaderNav.vue')['default']
-    LogoutButton: typeof import('./components/LogoutButton.vue')['default']
-    ProblemTagSelect: typeof import('./components/ProblemTagSelect.vue')['default']
+    LogoutButton: typeof import('./components/auth/LogoutButton.vue')['default']
+    ProblemTagSelect: typeof import('./components/problem/ProblemTagSelect.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    ToUserSettingButton: typeof import('./components/ToUserSettingButton.vue')['default']
+    ToUserSettingButton: typeof import('./components/user/ToUserSettingButton.vue')['default']
   }
 }
