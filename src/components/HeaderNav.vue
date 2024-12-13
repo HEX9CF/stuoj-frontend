@@ -78,6 +78,7 @@ const menuLinks = computed(() => {
 
 .header-nav__row {
     height: 100%;
+    width: 100%;
 }
 
 .header-nav__user {
