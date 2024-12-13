@@ -3,7 +3,7 @@
         <div class="problem-list-item__id">
             {{ props.problem.id }}
         </div>
-        <ElLink class="problem-list-item__title" :href="'/problem/' + props.problem.id">
+        <ElLink class="problem-list-item__title" :href="'/web/problem/' + props.problem.id">
             {{ props.problem.title }}
         </ElLink>
         <div v-if="info.role >= ROLE.Admin" class="problem-list-item__status">
