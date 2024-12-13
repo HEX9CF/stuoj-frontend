@@ -4,13 +4,13 @@
             <el-input v-model="params.title" />
         </el-form-item>
         <el-form-item label="难度" label-position="right">
-            <ProblemDifficultySelect v-model="params.difficulty" />
+            <ProblemDifficultySelect v-model="params.difficulty" ref="difficultySelectRef" />
         </el-form-item>
         <el-form-item label-width="auto">
-            <ProblemTagSelect v-model="params.tag" />
+            <ProblemTagSelect v-model="params.tag" ref="problemTagSelectRef" />
         </el-form-item>
         <el-form-item>
-            <el-button>重置</el-button>
+            <el-button @click="handleReset">重置</el-button>
             <el-button type="primary" @click="getList">查询</el-button>
         </el-form-item>
     </ElForm>
@@ -22,6 +22,9 @@ import { onMounted, ref } from 'vue';
 import { getProblemListApi } from '@/apis/problem';
 import type { ProblemInfo } from '@/types/Problem';
 import type { Page } from '@/types/misc';
+import ProblemTagSelect from '@/components/problem/ProblemTagSelect.vue';
+import ProblemDifficultySelect from '@/components/problem/ProblemDifficultySelect.vue';
+
 
 const problemPage = ref<Page<"problems", ProblemInfo>>();
 const problems = ref<ProblemInfo[]>([]);
@@ -53,5 +56,17 @@ const getList = async () => {
 }
 
 onMounted(getList);
+
+const problemTagSelectRef = ref<InstanceType<typeof ProblemTagSelect> | null>(null);
+const difficultySelectRef = ref<InstanceType<typeof ProblemDifficultySelect> | null>(null);
+const handleReset = () => {
+    if (difficultySelectRef.value)
+        difficultySelectRef.value.reset();
+
+    if (problemTagSelectRef.value)
+        problemTagSelectRef.value.resetAndConfirm();
+
+    params.value.title = '';
+};
 
 </script>

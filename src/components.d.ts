@@ -30,7 +30,6 @@ declare module 'vue' {
     HeaderNav: typeof import('./components/HeaderNav.vue')['default']
     LogoutButton: typeof import('./components/auth/LogoutButton.vue')['default']
     ProblemDifficultySelect: typeof import('./components/problem/ProblemDifficultySelect.vue')['default']
-    ProblemItem: typeof import('./components/problem/ProblemListItem.vue')['default']
     ProblemList: typeof import('./components/problem/ProblemList.vue')['default']
     ProblemListItem: typeof import('./components/problem/ProblemListItem.vue')['default']
     ProblemTagSelect: typeof import('./components/problem/ProblemTagSelect.vue')['default']
