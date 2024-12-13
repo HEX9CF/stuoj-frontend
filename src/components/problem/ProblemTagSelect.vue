@@ -4,8 +4,7 @@
     </ElButton>
     <ElDialog v-model="tagDialogVisible">
         <div class="flex gap-2">
-            <ElCheckTag v-for="tag in wsTags" :key="tag.data.id" v-model:checked="tag.checked" :label="tag.data.name"
-                @change="handleTagChange(tag)">
+            <ElCheckTag v-for="tag in wsTags" :key="tag.data.id" v-model:checked="tag.checked" :label="tag.data.name">
                 {{ tag.data.name }}
             </ElCheckTag>
         </div>
@@ -25,6 +24,14 @@ import { onMounted, ref } from 'vue';
 import { getProblemTagsApi } from '@/apis/problem';
 import type { Tag } from '@/types/Problem';
 
+const props = defineProps({
+    modelValue: {
+        type: Array<number>,
+        default: null,
+    },
+});
+
+
 const emit = defineEmits(['update:modelValue']);
 
 interface TemTag {
@@ -32,7 +39,7 @@ interface TemTag {
     data: Tag;
 }
 
-const tags = ref<Tag[]>([]);
+const tags = ref<number[]>(props.modelValue);
 const tagDialogVisible = ref(false);
 let wsTags = ref<TemTag[]>([]);
 let savedWsTags: TemTag[] | null = null; // 用于保存wsTags状态的变量
@@ -53,25 +60,12 @@ const showDialog = () => {
     if (savedWsTags === null) {
         savedWsTags = JSON.parse(JSON.stringify(wsTags.value));
     }
-
     tagDialogVisible.value = true;
-};
-
-const handleTagChange = (tag: TemTag) => {
-    const index = tags.value.findIndex(t => t.id === tag.data.id);
-    if (!tag.checked) {
-        if (index === -1) {
-            tags.value.push(tag.data);
-        }
-    } else {
-        if (index !== -1) {
-            tags.value.splice(index, 1);
-        }
-    }
 };
 
 const handleConfirm = () => {
     tagDialogVisible.value = false;
+    tags.value = wsTags.value.filter(tag => tag.checked).map(({ data }) => data.id);
     emit('update:modelValue', tags.value);
     savedWsTags = null; // 确认后清空保存的状态
 };

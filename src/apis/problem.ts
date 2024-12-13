@@ -9,7 +9,7 @@ export const getProblemListApi = useDefineApi<
             size?: number,
             title?: string,
             difficulty?: number,
-            tag?: number[],
+            tag?: string,
             status?: number,
         };
 
