@@ -4,57 +4,28 @@
             <el-input v-model="params.title" />
         </el-form-item>
         <el-form-item label="难度" label-position="right">
-            <el-select v-model="params.difficulty" clearable placeholder="Select" style="width: 240px">
-                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-            </el-select>
+            <ProblemDifficultySelect v-model="params.difficulty" />
         </el-form-item>
         <el-form-item label-width="auto">
-            <ProblemTagSelect />
+            <ProblemTagSelect v-model="params.tag" />
         </el-form-item>
         <el-form-item>
             <el-button>重置</el-button>
             <el-button type="primary" @click="getList">查询</el-button>
         </el-form-item>
     </ElForm>
+    <ProblemList :problems="problems" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { getProblemListApi } from '@/apis/problem';
+import type { ProblemInfo } from '@/types/Problem';
+import type { Page } from '@/types/misc';
 
-const options = [
-    {
-        value: 0,
-        label: '暂无评定',
-    },
-    {
-        value: 1,
-        label: '普及−',
-    },
-    {
-        value: 2,
-        label: '普及/提高−',
-    },
-    {
-        value: 3,
-        label: '普及+/提高',
-    },
-    {
-        value: 4,
-        label: '提高+/省选−',
-    },
-    {
-        value: 5,
-        label: '省选/NOI',
-    },
-    {
-        value: 6,
-        label: 'NOI/NOI+/CTSC',
-    }
-]
-
-
-const { execute } = getProblemListApi()
+const problemPage = ref<Page<"problems", ProblemInfo>>();
+const problems = ref<ProblemInfo[]>([]);
+const { state, execute } = getProblemListApi()
 interface ProblemParams {
     page: number
     size: number
@@ -66,14 +37,21 @@ interface ProblemParams {
 const params = ref<ProblemParams>({
     page: 1,
     size: 20
-})
+});
 
 const getList = async () => {
-    const state = await execute({
-        params: params.value
+    await execute({
+        params: {
+            ...params.value,
+            tag: params.value.tag?.join(',') // 将数组转换为字符串
+        }
     })
+    if (state.value && state.value.code === 1) {
+        problemPage.value = state.value.data as Page<"problems", ProblemInfo>;
+        problems.value = problemPage.value?.problems;
+    }
 }
 
-
+onMounted(getList);
 
 </script>
