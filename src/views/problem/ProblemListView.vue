@@ -51,7 +51,7 @@ const getList = async () => {
     })
     if (state.value && state.value.code === 1) {
         problemPage.value = state.value.data as Page<"problems", ProblemInfo>;
-        problems.value = problemPage.value?.problems;
+        problems.value = problemPage.value.problems;
     }
 }
 
