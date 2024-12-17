@@ -43,7 +43,7 @@ const router = createRouter({
       meta:{permission: ROLE.Visitor, },
     },
     {
-      path:'/problems/:id',
+      path:'/problem/:id',
       name:'problem',
       component: () => import('../views/problem/ProblemView.vue'),
       meta:{permission: ROLE.Visitor, },
