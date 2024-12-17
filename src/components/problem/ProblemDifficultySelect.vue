@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, watch } from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 import { Difficulty,DifficultyMap } from '@/types/Problem';
 const props = defineProps({
     modelValue: {
@@ -50,13 +50,9 @@ const selectedValue = ref(props.modelValue);
 
 const emit = defineEmits(['update:modelValue']);
 
-// 监听selectedValue的变化，并更新props中的modelValue
-watch(selectedValue, (newValue) => {
-    emit('update:modelValue', newValue);
-});
-
 const handleSelectChange = (value: number) => {
     selectedValue.value = value;
+    emit('update:modelValue', value);
 };
 const reset = () => {
     selectedValue.value = "";
