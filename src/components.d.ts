@@ -9,8 +9,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('./components/user/Avatar.vue')['default']
     AvatarInfo: typeof import('./components/user/AvatarInfo.vue')['default']
+    CodeEditor: typeof import('./components/CodeEditor.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
     ElCheckTag: typeof import('element-plus/es')['ElCheckTag']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
