@@ -30,6 +30,7 @@ declare module 'vue' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElText: typeof import('element-plus/es')['ElText']
     HeaderNav: typeof import('./components/HeaderNav.vue')['default']
+    LanguageSelect: typeof import('./components/LanguageSelect.vue')['default']
     LogoutButton: typeof import('./components/auth/LogoutButton.vue')['default']
     ProblemDifficultySelect: typeof import('./components/problem/ProblemDifficultySelect.vue')['default']
     ProblemList: typeof import('./components/problem/ProblemList.vue')['default']
