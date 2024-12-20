@@ -2,7 +2,7 @@ import { useDefineApi } from "@/stores/useDefineApi"
 import type { Page } from "@/types/misc";
 import type { Judgement, Submission } from "@/types/Record"
 
-export const getRecordeList = useDefineApi<
+export const getRecordList = useDefineApi<
     {
         params: {
             "end-time"?: string;
@@ -21,7 +21,7 @@ export const getRecordeList = useDefineApi<
     method: "get"
 })
 
-export const getRecordeInfo = useDefineApi<
+export const getRecordInfo = useDefineApi<
     {
         id: number
     },

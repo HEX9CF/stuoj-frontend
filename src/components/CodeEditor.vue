@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits(['update:modelValue']);
 
-const { modelValue, mode, theme, options } = toRefs(props);
+const { mode, theme, options } = toRefs(props);
 
 const editor = ref(null);
 
@@ -57,5 +57,6 @@ onUnmounted(() => {
 .ace-editor {
     height: 700px;
     width: 100%;
+    font-size: 16px;
 }
 </style>
