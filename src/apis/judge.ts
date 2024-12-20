@@ -3,9 +3,11 @@ import type { Language } from "@/types/Judge"
 
 export const Submit = useDefineApi<
     {
-        problem_id: number;
-        language_id: number;
-        source_code: string;
+        data: {
+            problem_id: number;
+            language_id: number;
+            source_code: string;
+        }
     },
     number
 >({
@@ -23,9 +25,11 @@ export const GetLanguages = useDefineApi<
 
 export const TestRun = useDefineApi<
     {
-        stdin: string;
-        language_id: number;
-        source_code: string;
+        data: {
+            stdin: string;
+            language_id: number;
+            source_code: string;
+        }
     },
     {
         memory: number;

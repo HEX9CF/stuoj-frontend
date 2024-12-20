@@ -36,6 +36,18 @@ const router = createRouter({
       component: () => import('../views/user/UserSpace.vue'),
       meta:{permission: ROLE.Visitor, },
     },
+    {
+      path:'/problems',
+      name:'problems',
+      component: () => import('../views/problem/ProblemListView.vue'),
+      meta:{permission: ROLE.Visitor, },
+    },
+    {
+      path:'/problem/:id',
+      name:'problem',
+      component: () => import('../views/problem/ProblemView.vue'),
+      meta:{permission: ROLE.Visitor, },
+    }
     // {
     //   path:'admin',
     //   name:'admin',
