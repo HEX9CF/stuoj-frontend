@@ -3,7 +3,7 @@ export interface ProblemInfo {
     description?: string;
     difficulty: Difficulty;
     hint?: string;
-    id: number;
+    id?: number;
     input?: string;
     memory_limit: number;
     output?: string;
